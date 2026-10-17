@@ -154,7 +154,24 @@ jobs:
       - name: Create Windows installer from signed app
         if: runner.os == 'Windows'
         run: npx electron-forge make --from-package --platform win32 --arch x64
-      - name: Sign Windows installer with Azure Artifact Signing
+      - name: Sign embedded Squirrel installer with Azure Artifact Signing
+        if: runner.os == 'Windows'
+        uses: azure/artifact-signing-action@208f8af4bf26cf2af8597424e3cb5582801523ba # v2.0.0
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          endpoint: ${{ secrets.AZURE_ARTIFACT_SIGNING_ENDPOINT }}
+          signing-account-name: ${{ secrets.AZURE_ARTIFACT_SIGNING_ACCOUNT }}
+          certificate-profile-name: ${{ secrets.AZURE_ARTIFACT_SIGNING_PROFILE }}
+          files-folder: ${{ github.workspace }}\out\make\squirrel.windows\x64
+          files-folder-filter: exe
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+      - name: Wrap Windows setup with graceful app shutdown
+        if: runner.os == 'Windows'
+        run: node scripts/wrap-windows-installer.js
+      - name: Sign Windows setup wrapper with Azure Artifact Signing
         if: runner.os == 'Windows'
         uses: azure/artifact-signing-action@208f8af4bf26cf2af8597424e3cb5582801523ba # v2.0.0
         with:

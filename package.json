@@ -22,7 +22,7 @@
     "build-pages": "node lib/build-pages.js",
     "build-all": "npm run clean && npm run build-chals && npm run build-pages",
     "package": "electron-forge package",
-    "make": "node scripts/prepare-icons.js && electron-forge make && node scripts/make-dmg.js",
+    "make": "node scripts/prepare-icons.js && electron-forge make && node scripts/wrap-windows-installer.js && node scripts/make-dmg.js",
     "set-dev-version": "node scripts/set-dev-version.js"
   },
   "repository": {
