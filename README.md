@@ -12,7 +12,7 @@ Download the latest desktop installer from the project’s GitHub release:
 - [Download for Windows (x64 installer)](https://github.com/devmunro/msit-git-lab/releases/latest/download/MSIT-Git-Lab-Windows-x64-Setup.exe)
 - [Browse all releases](https://github.com/devmunro/msit-git-lab/releases)
 
-Release downloads are published from tagged builds. macOS releases are signed and notarized when the project’s Apple release credentials are configured; Windows installers are signed when the Windows certificate is configured. Without signing credentials, downloads are still published, but macOS Gatekeeper or Windows SmartScreen may show a warning before the app opens.
+Release downloads are published from tagged builds. Windows releases require Microsoft Azure Artifact Signing and are signed before publication. macOS releases are signed and notarized when the project’s Apple release credentials are configured. SmartScreen can still warn on newly signed Windows apps while the publisher builds download reputation. See [Windows release signing setup](docs/windows-release-signing.md) before publishing a Windows release.
 
 ## Screenshots
 
