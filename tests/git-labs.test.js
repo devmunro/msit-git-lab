@@ -17,7 +17,7 @@ function workspace () {
 async function makeLab (id, root) {
   const created = await labs.create(id, root)
   assert.equal(created.reused, false)
-  assert.equal(fs.realpathSync(await git.runGit(['rev-parse', '--show-toplevel'], { cwd: created.path })), fs.realpathSync(created.path))
+  assert.equal(fs.realpathSync.native(await git.runGit(['rev-parse', '--show-toplevel'], { cwd: created.path })), fs.realpathSync.native(created.path))
   return created.path
 }
 
@@ -98,11 +98,12 @@ test('all practice labs use generated, repeatable repositories with Git checkpoi
   let firstBadCommit = null
   for (let attempt = 0; attempt < 8; attempt++) {
     const feature = await git.tryGit(['show', 'HEAD:feature.flag'], cwd)
-    const marked = await git.runGit(['bisect', feature.ok && feature.output === 'broken' ? 'bad' : 'good'], { cwd })
-    const firstBadMatch = marked.match(/^([0-9a-f]+) is the first bad commit/im)
-    if (firstBadMatch) {
+    await git.runGit(['bisect', feature.ok && feature.output === 'broken' ? 'bad' : 'good'], { cwd })
+    const current = await git.tryGit(['show', 'refs/bisect/bad:feature.flag'], cwd)
+    const parent = await git.tryGit(['show', 'refs/bisect/bad^:feature.flag'], cwd)
+    if (current.ok && current.output === 'broken' && parent.ok && parent.output === 'stable') {
       foundBadCommit = true
-      firstBadCommit = firstBadMatch[1]
+      firstBadCommit = await git.runGit(['rev-parse', 'refs/bisect/bad'], { cwd })
       break
     }
   }
