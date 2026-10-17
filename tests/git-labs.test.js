@@ -17,7 +17,7 @@ function workspace () {
 async function makeLab (id, root) {
   const created = await labs.create(id, root)
   assert.equal(created.reused, false)
-  assert.equal(path.resolve(await git.runGit(['rev-parse', '--show-toplevel'], { cwd: created.path })), path.resolve(created.path))
+  assert.equal(fs.realpathSync(await git.runGit(['rev-parse', '--show-toplevel'], { cwd: created.path })), fs.realpathSync(created.path))
   return created.path
 }
 
