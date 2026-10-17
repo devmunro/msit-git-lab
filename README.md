@@ -8,9 +8,9 @@ It keeps the original 11 Git-it challenges and builds on them with intermediate 
 
 Download the latest desktop installer from the project’s GitHub release:
 
-- [Download for macOS (universal DMG)](https://github.com/lazar-savko/git-it-electron/releases/latest/download/MSIT-Git-Lab-macOS-universal.dmg)
-- [Download for Windows (x64 installer)](https://github.com/lazar-savko/git-it-electron/releases/latest/download/MSIT-Git-Lab-Windows-x64-Setup.exe)
-- [Browse all releases](https://github.com/lazar-savko/git-it-electron/releases)
+- [Download for macOS (universal DMG)](https://github.com/devmunro/msit-git-lab/releases/latest/download/MSIT-Git-Lab-macOS-universal.dmg)
+- [Download for Windows (x64 installer)](https://github.com/devmunro/msit-git-lab/releases/latest/download/MSIT-Git-Lab-Windows-x64-Setup.exe)
+- [Browse all releases](https://github.com/devmunro/msit-git-lab/releases)
 
 Release downloads are published from tagged builds. macOS releases are signed and notarized when the project’s Apple release credentials are configured; Windows installers are signed when the Windows certificate is configured. Without signing credentials, downloads are still published, but macOS Gatekeeper or Windows SmartScreen may show a warning before the app opens.
 
@@ -86,7 +86,7 @@ We’re building this as a practical learning resource for courses and for your 
 - **Classroom use:** explore instructor-friendly setup and progress options while keeping learner repositories private and local by default.
 - **Language quality:** keep English and informal German lessons aligned, with fluent review of German copy.
 
-Suggestions and student feedback are welcome through [GitHub Issues](https://github.com/lazar-savko/git-it-electron/issues).
+Suggestions and student feedback are welcome through [GitHub Issues](https://github.com/devmunro/msit-git-lab/issues).
 
 ## Credits
 

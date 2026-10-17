@@ -27,14 +27,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lazar-savko/git-it-electron.git"
+    "url": "https://github.com/devmunro/msit-git-lab.git"
   },
   "author": "MSIT (based on Git-it by Jessica Lord)",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/lazar-savko/git-it-electron/issues"
+    "url": "https://github.com/devmunro/msit-git-lab/issues"
   },
-  "homepage": "https://github.com/lazar-savko/git-it-electron",
+  "homepage": "https://github.com/devmunro/msit-git-lab",
   "devDependencies": {
     "@electron-forge/cli": "8.0.1",
     "@electron-forge/maker-squirrel": "8.0.1",
