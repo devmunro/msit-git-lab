@@ -1,51 +1,147 @@
-<h1>Resources</h1>
-<p>To reinforce what you just learned or to try another way, here are suggestions for other guides and tutorials.</p>
-<p>If you're ready to dive into a project, jump to the <a href="#what-next">beginner projects</a> section.</p>
-
-<div class="blue-border-box">
-    <h4>Interactive Tutorial</h4>
+<article id="resources" class="resource-guide">
+  <p class="eyebrow">THE GIT FIELD GUIDE</p>
+  <h1>Understand how Git tracks your work.</h1>
+  <p class="resource-lead">Learn how commits build a project history, how branches let you work safely, and how GitHub helps a team review and share changes. For command syntax, jump to the Git dictionary.</p>
+  <p><a class="dictionary-jump" href="#git-dictionary">Jump to the Git dictionary ↓</a></p>
+  <section>
+    <h2>From working files to saved history</h2>
+    <div class="resource-columns">
+      <div><h3>Working tree</h3><p>The files you can see and edit. Use <code>git status</code> to find changes and <code>git diff</code> to read them.</p></div>
+      <div><h3>Staging area</h3><p>The changes you picked for your next snapshot. Use <code>git add</code> to stage a file and <code>git diff --staged</code> to review it.</p></div>
+      <div><h3>Repository</h3><p>Your saved commits and branches. A commit records the staged snapshot with a message, author and parent commit.</p></div>
+    </div>
+  </section>
+  <section>
+    <h2>A steady local workflow</h2>
+    <ol class="resource-steps">
+      <li>Check where you are: <code>git status</code> and <code>git branch --show-current</code>.</li>
+      <li>Read what changed: <code>git diff</code>.</li>
+      <li>Stage just the related files: <code>git add path/to/file</code>.</li>
+      <li>Review the staged snapshot: <code>git diff --staged</code>.</li>
+      <li>Commit one clear idea: <code>git commit -m "Describe the change"</code>.</li>
+      <li>Check again: <code>git status</code>.</li>
+    </ol>
+    <p>Small commits are easier to understand, review and undo. A good commit message says what changed and, where useful, why.</p>
+  </section>
+  <section>
+    <h2>Branches, merges and conflicts</h2>
+    <p>A branch is a movable name for a line of work. Create one for a focused change with <code>git switch -c feature/name</code>. When it is ready, merge it into the branch you want to update:</p>
+    <pre><code>git switch main
+git merge feature/name</code></pre>
+    <p>If both branches changed the same part of a file, Git pauses and marks the conflict. Read both versions, write the result you want, remove the marker lines, then stage the resolved file and commit. Git cannot infer the intended wording for you.</p>
+  </section>
+  <section>
+    <h2>Merge or rebase?</h2>
+    <div class="resource-columns two-columns">
+      <div><h3>Merge keeps the shared history</h3><p><code>git merge</code> connects two lines of work. When they have diverged, the merge commit records how they came together.</p></div>
+      <div><h3>Rebase replays your commits</h3><p><code>git rebase main</code> reapplies your branch’s commits on top of a newer base. Rewritten commits get new IDs. Rebase commits that are still yours to change; avoid rewriting commits other people rely on.</p></div>
+    </div>
+    <p>For an interactive clean-up, <code>git rebase -i HEAD~3</code> opens a todo list for the last three commits. You can reorder, edit, combine or drop them. If you are unsure mid-rebase, <code>git rebase --abort</code> returns to the starting point.</p>
+  </section>
+  <section>
+    <h2>Move one change, or put work aside</h2>
+    <p><code>git cherry-pick &lt;commit&gt;</code> copies one chosen change onto your current branch. It is useful for a small fix you need in another line of work.</p>
+    <p><code>git stash push -u -m "short note"</code> puts tracked edits and untracked files aside temporarily. <code>git stash pop</code> reapplies the latest entry. Review the result, because applying a stash can also cause conflicts.</p>
+  </section>
+  <section class="resource-safety">
+    <h2>Recovering history carefully</h2>
+    <p><code>git reflog</code> shows where your local branch and HEAD recently pointed. It can help you find a commit after a reset or rebase. Inspect first, then restore a chosen commit with a command such as <code>git cherry-pick &lt;hash&gt;</code>.</p>
+    <p>Commands such as <code>git reset --hard</code> discard working-tree changes and move a branch. Practice history rewrites only in the generated, resettable MSIT Git Lab folders. Do not run those steps in a repository with work you need.</p>
+  </section>
+  <section>
+    <h2>Tags and bisect</h2>
+    <p>A tag names an important point in history, often a release. Use an annotated tag for a release note: <code>git tag -a v1.0.0 -m "First release"</code>. Inspect it with <code>git show v1.0.0</code>.</p>
+    <p><code>git bisect</code> narrows down a regression by asking which commits are good and which are bad. Give it one known-good revision and one known-bad revision, test each point Git selects, then use <code>git bisect reset</code> to leave the search.</p>
+  </section>
+  <section>
+    <h2>From your computer to GitHub</h2>
+    <p>A remote is another copy of your repository, often on GitHub. <code>git remote -v</code> lists it. Push your branch with <code>git push -u origin feature/name</code>. A pull request asks others to review that branch before it is merged.</p>
+    <p>Review a pull request by reading the changed files, asking questions and checking that the change fits the project. After it is merged, update local main with <code>git switch main</code> and <code>git pull</code>.</p>
+  </section>
+  <section>
+    <h2>A practice loop that sticks</h2>
+    <ol class="resource-steps">
+      <li>Predict what the next command will change.</li>
+      <li>Run it in your terminal.</li>
+      <li>Check with <code>git status</code>, <code>git log --oneline --graph --all</code> or <code>git show</code>.</li>
+      <li>If you get stuck, read the error and inspect before trying another command.</li>
+      <li>Reset an MSIT Git Lab exercise and do it again from memory.</li>
+    </ol>
+  </section>
+  <section id="git-dictionary" class="dictionary-section" aria-labelledby="git-dictionary-title">
+    <h2 id="git-dictionary-title">Git dictionary</h2>
+    <p>Short definitions for the words and commands you’ll meet throughout the learning path.</p>
+    <div class="classic-command-dictionary" aria-label="Original Git-it command dictionary">
+      <section><h3>Bash/Terminal Basics</h3><dl>
+        <div><dt>Make a new folder (aka make directory)</dt><dd><code>mkdir &lt;FOLDERNAME&gt;</code></dd></div>
+        <div><dt>Navigate into an existing folder (aka change directory)</dt><dd><code>cd &lt;FOLDERNAME&gt;</code></dd></div>
+        <div><dt>List the items in a folder</dt><dd><code>ls</code></dd></div>
+      </dl></section>
+      <section><h3>Configuring Git</h3><dl>
+        <div><dt>Check Git version</dt><dd><code>git --version</code></dd></div>
+        <div><dt>Set your name</dt><dd><code>git config --global user.name "Your Name"</code></dd></div>
+        <div><dt>Set your email</dt><dd><code>git config --global user.email youremail@example.com</code></dd></div>
+        <div><dt>Set your GitHub account (case sensitive)</dt><dd><code>git config --global user.username uSeRnAmE</code></dd></div>
+      </dl></section>
+      <section><h3>Git Basics</h3><dl>
+        <div><dt>Turn Git on for a folder</dt><dd><code>git init</code></dd></div>
+        <div><dt>Check status of changes to a repository</dt><dd><code>git status</code></dd></div>
+        <div><dt>View changes to files</dt><dd><code>git diff</code></dd></div>
+        <div><dt>Add a file’s changes to be committed</dt><dd><code>git add &lt;FILENAME&gt;</code></dd></div>
+        <div><dt>To add all files changes</dt><dd><code>git add .</code></dd></div>
+        <div><dt>To commit (aka save) the changes you’ve added with a short message describing the changes</dt><dd><code>git commit -m "your commit message"</code></dd></div>
+        <div><dt>Copy a repository to your computer</dt><dd><code>git clone &lt;URL&gt;</code></dd></div>
+      </dl></section>
+      <section><h3>Git Branches</h3><dl>
+        <div><dt>Create a new branch</dt><dd><code>git branch &lt;BRANCHNAME&gt;</code></dd></div>
+        <div><dt>Move onto a branch</dt><dd><code>git checkout &lt;BRANCHNAME&gt;</code></dd></div>
+        <div><dt>You can create and switch to a branch in one line</dt><dd><code>git checkout -b &lt;BRANCHNAME&gt;</code></dd></div>
+        <div><dt>List the branches</dt><dd><code>git branch</code></dd></div>
+        <div><dt>Rename a branch you’re currently on</dt><dd><code>git branch -m &lt;NEWBRANCHNAME&gt;</code></dd></div>
+      </dl></section>
+      <section><h3>Git Remotes</h3><dl>
+        <div><dt>Add remote connections</dt><dd><code>git remote add &lt;REMOTENAME&gt; &lt;URL&gt;</code></dd></div>
+        <div><dt>Set a URL to a remote</dt><dd><code>git remote set-url &lt;REMOTENAME&gt; &lt;URL&gt;</code></dd></div>
+        <div><dt>View remote connections</dt><dd><code>git remote -v</code></dd></div>
+      </dl></section>
+      <section><h3>Pulling in Git</h3><dl>
+        <div><dt>Pull in changes</dt><dd><code>git pull</code></dd></div>
+        <div><dt>Pull in changes from a remote branch</dt><dd><code>git pull &lt;REMOTENAME&gt; &lt;REMOTEBRANCH&gt;</code></dd></div>
+        <div><dt>See changes to the remote before you pull in</dt><dd><code>git fetch --dry-run</code></dd></div>
+      </dl></section>
+      <section><h3>Push &amp; Merge in Git</h3><dl>
+        <div><dt>Push changes</dt><dd><code>git push &lt;REMOTENAME&gt; &lt;BRANCHNAME&gt;</code></dd></div>
+        <div><dt>Merge a branch into current branch</dt><dd><code>git merge &lt;BRANCHNAME&gt;</code></dd></div>
+      </dl></section>
+      <section><h3>Deleting Remotes and Branches in Git</h3><dl>
+        <div><dt>Delete a local branch</dt><dd><code>git branch -D &lt;BRANCHNAME&gt;</code></dd></div>
+        <div><dt>Delete a remote branch</dt><dd><code>git push &lt;REMOTENAME&gt; --delete &lt;BRANCHNAME&gt;</code></dd></div>
+      </dl></section>
+    </div>
+    <p class="dictionary-safety-note">The original command list includes commands such as <code>git branch -D</code>, which can force-delete an unmerged branch. Practice destructive commands only in a disposable repository.</p>
+    <h3 class="dictionary-subheading">More Git terms</h3>
+    <dl class="resource-dictionary">
+      <div><dt>Working tree <code>git status</code></dt><dd>The files in your project folder, including edits you haven’t saved in a commit yet.</dd></div>
+      <div><dt>Staging area <code>git add</code></dt><dd>The changes you’ve selected to include in your next commit.</dd></div>
+      <div><dt>Commit <code>git commit</code></dt><dd>A saved snapshot of staged changes, with a message and a link to its parent commit.</dd></div>
+      <div><dt>Branch <code>git switch -c name</code></dt><dd>A movable name for a line of work. Create a branch to work on a change separately.</dd></div>
+      <div><dt>HEAD <code>git log</code></dt><dd>Git’s reference to the commit or branch you currently have checked out.</dd></div>
+      <div><dt>Remote <code>git remote -v</code></dt><dd>A named connection to another copy of your repository, often hosted on GitHub.</dd></div>
+      <div><dt>Fetch <code>git fetch</code></dt><dd>Download updates from a remote so you can inspect them before integrating them.</dd></div>
+      <div><dt>Pull <code>git pull</code></dt><dd>Fetch remote updates and integrate them into your current branch.</dd></div>
+      <div><dt>Merge <code>git merge</code></dt><dd>Join changes from another branch into the branch you’re currently on.</dd></div>
+      <div><dt>Merge conflict</dt><dd>A place where Git needs you to choose how overlapping changes should fit together.</dd></div>
+      <div><dt>Rebase <code>git rebase</code></dt><dd>Replay your commits on a new base. Rebased commits get new IDs.</dd></div>
+      <div><dt>Clone <code>git clone</code></dt><dd>Create a local copy of a repository, including its commit history.</dd></div>
+    </dl>
+  </section>
+  <section class="official-links">
+    <h2>Go deeper</h2>
     <ul>
-        <li><a href="https://try.github.io/levels/1/challenges/1">Try Git</a> (Uses an terminal emulator) by CodeSchool
-        </li>
+      <li><a href="https://git-scm.com/book/en/v2" data-external>Pro Git book</a> — a free, detailed guide to Git.</li>
+      <li><a href="https://git-scm.com/docs" data-external>Git command reference</a> — official options and examples.</li>
+      <li><a href="https://docs.github.com/en/get-started" data-external>GitHub getting started</a> — repositories and collaboration on GitHub.</li>
+      <li><a href="https://docs.github.com/en/pull-requests" data-external>GitHub pull request guide</a> — propose, review and merge changes.</li>
     </ul>
-
-    <h4>Guides, Books and Cheatsheets</h4>
-    <ul>
-        <li><a href="http://git-scm.com/docs/gittutorial">Introduction to Git</a> by Git</li>
-        <li><a href="http://git-scm.com/book/en/v2">Pro Git Book</a> by Scott Shacon</li>
-        <li><a href="http://rogerdudler.github.io/git-guide/">Simple Guide</a> by Roger Dudler</li>
-        <li><a href="https://help.github.com/">Github Help</a> by GitHub</li>
-        <li><a href="http://gitimmersion.com/">Git Immersion</a> by Neo</li>
-        <li><a href="https://training.github.com/kit/">Git Cheatsheet</a> by GitHub</li>
-        <li><a href="https://guides.github.com">GitHub Guides</a> by GitHub</li>
-        <li><a href="https://speakerdeck.com/yunico/20140601-github-kaigi-yunico?slide=16">GitHub Kaigi</a> by Yunico
-            Nagata
-        </li>
-    </ul>
-
-    <h3>GitHub Desktop</h3>
-    <p>You likely installed this before you started Git-it but if you didn't, here's the link.</p>
-    <p>The GitHub Desktop app lets you do much of what you can do in terminal (though not all) and is a bit easier to
-        read at times. Personally, I use it to look over anything not small <code>diff</code> I have. Your changes are
-        really nice to see this way.</p>
-    <ul>
-        <li><a href="https://desktop.github.com/">Github Desktop</a> (OSX, Windows) Free by GitHub</li>
-        <li><a href="https://help.github.com/desktop/">Github Desktop Guides</a> by GitHub</li>
-    </ul>
-	<p>You can checkout further git desktop applications on the Git website: <a href="https://www.git-scm.com/downloads/guis">Git GUIs</a></p>
-</div>
-
-<h2 id="what-next">What Next?</h2>
-<div class="blue-border-box">
-    <p>Now that you're feeling good because you've got the fundamentals down, here are some beginner project ideas to
-        keep you going!</p>
-    <ul>
-        <li><a href="http://github.com/jlord/hello">Fork this</a> to create a personal website (Requires HTML & CSS)
-        </li>
-        <li><a href="http://jlord.github.io/forkngo">Gallery of forkable sites</a> (Requires HTML & CSS)</li>
-        <li>Create a repository and open issues with <a
-                href="https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments">to-do lists</a>.
-        </li>
-        <li><a href="https://github.com/explore">Explore GitHub projects</a> for ones that match your interest.</li>
-    </ul>
-</div>
+  </section>
+</article>

@@ -1,20 +1,5 @@
-<header id="challenge-header" class="site-header">
-    <div class="lang-select">
-        <select id="lang-select" class="btn-outline lang-select">
-            {{ localemenu }}
-        </select>
-    </div>
-    <a class="filledblock" href="../pages/index.html">
-        Git-it
-    </a>
-    <div class="header-icons-overlay">
-        <img src="../../../assets/git-it.png" alt="Git-it Old" class="app-icon old-icon" />
-        <img src="../../../assets/new-icon.png" alt="Git-it New" class="app-icon new-icon" />
-    </div>
-    <span class="challenge-title">{{ challengetitle }}</span>
+<header id="challenge-header" class="topbar msit-navbar">
+    <a class="brand" href="../pages/index.html" aria-label="MSIT Git Lab Startseite"><img src="../../../assets/msit-logo-light.svg" alt="Master School Institute of Technology"><span class="brand-product">Git Lab</span></a>
+    <nav class="top-nav" aria-label="Hauptnavigation"><a href="../pages/resources.html#resources">Ressourcen</a><a href="../pages/resources.html#git-dictionary">Wörterbuch</a></nav>
+    <label class="language-control" for="lang-select"><span class="visually-hidden">Sprache</span><select id="lang-select" aria-label="Sprache auswählen">{{ localemenu }}</select></label>
 </header>
-
-<script>
-    var selector = document.getElementById('lang-select');
-    selector.value = "{{ lang }}"
-</script>

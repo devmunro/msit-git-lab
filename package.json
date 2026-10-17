@@ -1,51 +1,49 @@
 {
-  "name": "git-it-electron",
-  "version": "4.3.0",
-  "description": "An open source desktop app for learning Git and GitHub",
+  "name": "msit-git-lab",
+  "version": "5.0.0",
+  "description": "A bilingual desktop lab for learning Git and GitHub through real practice",
   "keywords": [
     "Git",
     "GitHub",
-    "Git-it",
+    "MSIT Git Lab",
     "tutorial",
     "guide",
     "learn",
     "desktop"
   ],
-  "productName": "Git-it",
+  "productName": "MSIT Git Lab",
   "main": "main.js",
   "scripts": {
     "prestart": "npm run build-all",
     "start": "electron .",
-    "test": "standard lib/*.js lib/verify/*.js menus/*.js main.js",
-    "clean": "rimraf built/*",
+    "test": "node --test tests/*.test.js && standard main.js preload.js forge.config.js lib/app-renderer.js lib/common-renderer.js lib/curriculum.js lib/git-service.js lib/labs.js lib/learning-path.js lib/home-renderer.js lib/own-repository-renderer.js lib/legacy-renderer.js lib/legacy-verification.js lib/locale.js lib/progress-store.js lib/build-challenges.js lib/build-pages.js menus/*.js scripts/*.js tests/*.js",
+    "clean": "node scripts/clean.js",
     "build-chals": "node lib/build-challenges.js",
     "build-pages": "node lib/build-pages.js",
     "build-all": "npm run clean && npm run build-chals && npm run build-pages",
-    "pack-mac": "electron-packager . Git-it --platform=darwin --arch=x64   --icon=assets/new-icon.png --overwrite --ignore=/out/ --ignore=assets/PortableGit --ignore=resources/ --prune=true --out=out",
-    "pack-lin": "electron-packager . Git-it --platform=linux  --arch=x64   --icon=assets/new-icon.png  --overwrite --ignore=/out/ --ignore=assets/PortableGit --ignore=resources/ --prune=true --out=out",
-    "pack-win": "electron-packager . Git-it --platform=win32  --arch=ia32  --icon=assets/new-icon.ico  --overwrite --ignore=/out/ --ignore=resources/ --prune=true --out=out",
-    "pack-win64": "electron-packager . Git-it --platform=win32  --arch=x64  --icon=assets/new-icon.ico  --overwrite --ignore=/out/ --ignore=resources/ --prune=true --out=out",
-    "build-release": "npm run build-all && npm run pack-mac && npm run pack-win && npm run pack-win64 && npm run pack-lin"
+    "package": "electron-forge package",
+    "make": "node scripts/prepare-icons.js && electron-forge make && node scripts/make-dmg.js",
+    "set-dev-version": "node scripts/set-dev-version.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jlord/git-it-electron.git"
+    "url": "https://github.com/lazar-savko/git-it-electron.git"
   },
-  "author": "Jessica Lord",
+  "author": "MSIT (based on Git-it by Jessica Lord)",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/jlord/git-it-electron/issues"
+    "url": "https://github.com/lazar-savko/git-it-electron/issues"
   },
-  "homepage": "https://github.com/jlord/git-it-electron",
+  "homepage": "https://github.com/lazar-savko/git-it-electron",
   "devDependencies": {
-    "electron": "^41.0.2",
-    "electron-packager": "^17.1.2",
-    "rimraf": "^2.5.4",
-    "standard": "^17.1.2"
+    "@electron-forge/cli": "8.0.1",
+    "@electron-forge/maker-squirrel": "8.0.1",
+    "@electron-forge/maker-zip": "8.0.1",
+    "electron": "44.8.0",
+    "electron-squirrel-startup": "1.0.1",
+    "standard": "17.1.2"
   },
   "dependencies": {
-    "cheerio": "^1.2.0",
-    "glob": "^5.0.5",
-    "handlebars": "^4.7.8"
+    "handlebars": "4.7.10"
   }
 }

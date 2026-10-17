@@ -1,0 +1,159 @@
+name: Publish desktop release
+
+on:
+  push:
+    tags:
+      - 'v*-dev.*'
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            platform: macOS-universal
+          - os: windows-latest
+            platform: Windows-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Confirm the tag is on the correct branch
+        shell: bash
+        run: |
+          git fetch origin main develop
+          if [[ "$GITHUB_REF_NAME" == *-dev.* ]]; then
+            source_branch=origin/develop
+          else
+            source_branch=origin/main
+          fi
+          if ! git branch -r --contains "$GITHUB_SHA" | sed 's/^[* ]*//' | grep -Fxq "$source_branch"; then
+            echo "Tag $GITHUB_REF_NAME must point to $source_branch" >&2
+            exit 1
+          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate stable version
+        if: ${{ !contains(github.ref_name, '-dev.') }}
+        run: node scripts/validate-release-version.js "${GITHUB_REF_NAME#v}"
+        shell: bash
+      - name: Set development version from tag
+        if: contains(github.ref_name, '-dev.')
+        run: npm run set-dev-version -- "${GITHUB_REF_NAME#v}"
+        shell: bash
+      - run: npm test
+      - run: npm audit --audit-level=high
+      - run: npm run build-all
+      - name: Check public release signing credentials
+        shell: bash
+        env:
+          APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_DEVELOPER_IDENTITY: ${{ secrets.APPLE_DEVELOPER_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          WINDOWS_CERTIFICATE_BASE64: ${{ secrets.WINDOWS_CERTIFICATE_BASE64 }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            required=(WINDOWS_CERTIFICATE_BASE64 WINDOWS_CERTIFICATE_PASSWORD)
+          else
+            required=(APPLE_CERTIFICATE_BASE64 APPLE_CERTIFICATE_PASSWORD APPLE_DEVELOPER_IDENTITY APPLE_ID APPLE_APP_SPECIFIC_PASSWORD APPLE_TEAM_ID)
+          fi
+          missing=0
+          for name in "${required[@]}"; do
+            if [[ -z "${!name}" ]]; then
+              echo "Signing secret is not configured: $name"
+              missing=1
+            fi
+          done
+          if [[ "$missing" == 1 ]]; then
+            echo 'Continuing with an unsigned build. Configure all signing secrets for trusted public installers.'
+          fi
+      - name: Import Apple signing certificate into temporary keychain
+        if: runner.os == 'macOS'
+        shell: bash
+        env:
+          APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          if [[ -z "$APPLE_CERTIFICATE_BASE64" || -z "$APPLE_CERTIFICATE_PASSWORD" ]]; then
+            echo 'Apple signing certificate is not configured; continuing with an unsigned app.'
+            exit 0
+          fi
+          certificate_path="$RUNNER_TEMP/msit-git-lab-signing.p12"
+          keychain_path="$RUNNER_TEMP/msit-git-lab.keychain-db"
+          keychain_password="$(openssl rand -hex 16)"
+          printf '%s' "$APPLE_CERTIFICATE_BASE64" | base64 --decode > "$certificate_path"
+          security create-keychain -p "$keychain_password" "$keychain_path"
+          security set-keychain-settings -lut 21600 "$keychain_path"
+          security unlock-keychain -p "$keychain_password" "$keychain_path"
+          security import "$certificate_path" -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign -T /usr/bin/productbuild -k "$keychain_path"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$keychain_password" "$keychain_path"
+          security list-keychains -d user -s "$keychain_path"
+          security default-keychain -d user -s "$keychain_path"
+      - name: Decode Windows signing certificate
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_CERTIFICATE_BASE64)) {
+            Write-Host 'No Windows signing certificate configured; creating an unsigned installer.'
+            exit 0
+          }
+          $certificatePath = Join-Path $env:RUNNER_TEMP 'msit-git-lab-signing.pfx'
+          [System.IO.File]::WriteAllBytes($certificatePath, [Convert]::FromBase64String($env:WINDOWS_CERTIFICATE_BASE64))
+          "WINDOWS_CERTIFICATE_FILE=$certificatePath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        env:
+          WINDOWS_CERTIFICATE_BASE64: ${{ secrets.WINDOWS_CERTIFICATE_BASE64 }}
+      - name: Create signed installer and macOS disk image
+        run: npm run make
+        env:
+          APPLE_DEVELOPER_IDENTITY: ${{ secrets.APPLE_DEVELOPER_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: msit-git-lab-${{ matrix.platform }}
+          path: out/make/**
+          if-no-files-found: error
+          retention-days: 3
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+          merge-multiple: true
+      - name: Prepare stable download filenames
+        shell: bash
+        run: |
+          mkdir -p release-assets
+          dmg=$(find release-artifacts -type f -name '*.dmg' -print -quit)
+          setup=$(find release-artifacts -type f -name '*Setup.exe' -print -quit)
+          zip=$(find release-artifacts -type f -name '*.zip' -print -quit)
+          test -n "$dmg" || { echo 'macOS DMG is missing' >&2; exit 1; }
+          test -n "$setup" || { echo 'Windows setup executable is missing' >&2; exit 1; }
+          cp "$dmg" release-assets/MSIT-Git-Lab-macOS-universal.dmg
+          cp "$setup" release-assets/MSIT-Git-Lab-Windows-x64-Setup.exe
+          if [[ -n "$zip" ]]; then cp "$zip" release-assets/MSIT-Git-Lab-macOS-universal.zip; fi
+      - uses: softprops/action-gh-release@v2
+        with:
+          prerelease: ${{ contains(github.ref_name, '-dev.') }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            release-assets/*

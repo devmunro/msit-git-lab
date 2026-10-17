@@ -1,0 +1,60 @@
+name: Build and test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm audit --audit-level=high
+      - run: npm run build-all
+
+  desktop-builds:
+    needs: checks
+    if: github.event_name != 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            platform: macOS-universal
+          - os: windows-latest
+            platform: Windows-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Set unique development build version
+        if: github.ref == 'refs/heads/develop'
+        run: npm run set-dev-version
+      - run: npm run build-all
+      - run: npm run make
+      - uses: actions/upload-artifact@v4
+        with:
+          name: msit-git-lab-${{ matrix.platform }}-${{ github.run_number }}
+          path: out/make/**
+          if-no-files-found: error
+          retention-days: 14

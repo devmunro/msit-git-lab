@@ -1,65 +1,93 @@
-# Git-it (Desktop App)
+# MSIT Git Lab
 
-[![Build Status](https://travis-ci.org/jlord/git-it-electron.svg?branch=master)](https://travis-ci.org/jlord/git-it-electron) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+**Learn Git by doing it.** MSIT Git Lab is a desktop learning tool for students who want to get comfortable with Git and GitHub through real commands, guided challenges, and repeatable practice.
 
-![screen shot 2016-04-17 at 10 37 55 pm](https://cloud.githubusercontent.com/assets/1305617/14594613/23873f64-04ed-11e6-9d3b-72f424dd0842.png)
-Git-it is a desktop (Mac, Windows and Linux) app that teaches you how to use Git and GitHub on the [command line](https://en.wikipedia.org/wiki/Command-line_interface).
+It keeps the original 11 Git-it challenges and builds on them with intermediate and advanced labs. You type commands in your regular terminal; the app guides you and checks your repository when you are ready. The app is available in English and informal German (`du`).
 
-**🚩The app includes translations in these languages: Spanish (ES), Spanish (CO), French, Portugese (BR), Ukrainian, Traditional Chinese, Japanese, and Korean. 🚩**
+## Download
 
-Previously it ran _in_ terminal (the command line application) with a guide online but now the guide _is_ the app and it runs on your desktop on its own :sparkles: **This will be the only maintained version going forward** :arrow_right:.
+Download the latest desktop installer from the project’s GitHub release:
 
----
-## Hello future Forkers, Branchers and Pull Requesters!
+- [Download for macOS (universal DMG)](https://github.com/lazar-savko/git-it-electron/releases/latest/download/MSIT-Git-Lab-macOS-universal.dmg)
+- [Download for Windows (x64 installer)](https://github.com/lazar-savko/git-it-electron/releases/latest/download/MSIT-Git-Lab-Windows-x64-Setup.exe)
+- [Browse all releases](https://github.com/lazar-savko/git-it-electron/releases)
 
-This application contains challenges for learning Git and GitHub—by using _real_ Git and GitHub, not emulators. You'll be learning the awesome (and not so scary) command line and GitHub which means when you finish all of the challenges you'll have _real_ repositories on your GitHub account and green squares on your [contribution chart](https://github.com/blog/1360-introducing-contributions).
+Release downloads are published from tagged builds. macOS releases are signed and notarized when the project’s Apple release credentials are configured; Windows installers are signed when the Windows certificate is configured. Without signing credentials, downloads are still published, but macOS Gatekeeper or Windows SmartScreen may show a warning before the app opens.
 
-![contributions](https://raw.githubusercontent.com/jlord/git-it/master/ghcc.png)
+## Screenshots
 
-## What to Install
+### Learning path
 
-You will need this app, Git-it as well as a text editor. You'll also of course need Git and the first challenge in Git-it helps you get that set up. But if you want to get a head start, go for it! You'll continue to use Git and your text editor throughout your bright social coding future.
+Start with the original challenges and unlock each next step by completing the one before it.
 
-As a part of the challenges you'll also create a (free) account on GitHub. If you've already got one, high-five!
+![MSIT Git Lab learning path with challenge progress and locked lessons](docs/screenshots/learning-path.png)
 
-#### Git
+### Git challenge
 
-We recommend installing [GitHub Desktop](http://desktop.github.com) (free) because it installs Git in the most consistent way across supported operating systems (Windows and Mac). We won't use the app itself in the challenges (but it is really useful once you get going in Git!), just the Git that it install for you.
+Follow the lesson, work in your repository, and verify your progress in the app.
 
-Note—If you're using Windows, you should use the **Git Shell** app as your terminal—it is installed with GitHub Desktop. In Mac and Linux you can use the app **Terminal**, which is already on your computer.
+![MSIT Git Lab challenge page with the basics sidebar](docs/screenshots/challenge-sidebar.png)
 
-#### Text Editor
+### Quick reference
 
-I'm quite partial (I'm on the team!) but [Atom](http://atom.io) is a great text editor (also free) and it is built on [Electron.js](http://electron.atom.io), just like Git-it. Visit the website and download the version for your operating system. [Sublime](https://www.sublimetext.com), [Microsoft VS Code](https://code.visualstudio.com) and [Adobe Brackets](http://brackets.io) are other options.
+Look up Git terms and commands in the compact dictionary while you learn.
 
-#### Git-it
+![MSIT Git Lab Git dictionary and command reference](docs/screenshots/git-dictionary.png)
 
-You can view the [releases](http://github.com/jlord/git-it-electron/releases) section of this repository to find the download for your operating system. Click to download your version. Once it has downloaded to your default Downloads directory, unzip the folder and run the Git-it executable. The executables for Mac, Windows and Linux:
+## What you’ll practice
 
-![executables](https://cloud.githubusercontent.com/assets/1305617/14696588/2b10abf8-0731-11e6-945e-f3d57114bce9.png)
+The learning path starts with Git installation, repositories, commits, GitHub, remotes, forks, and clones. It continues through branches, pull requests, and merging, then adds labs for:
 
-- **Mac** Right (control) click the Git-it icon, select Open and then Open again. You can drag the icon into your Applications directory if you want, but it's not required. If needed, more [detailed installation instructions](https://github.com/jlord/git-it-electron/issues/121#issue-149747488) can be found in this issue.
-- **Windows** Double-click the executable.
-- **Linux** Double-click the executable. If the app isn't running, [see this issue](https://github.com/jlord/git-it-electron/issues/182).
+- Staging changes and writing commits
+- Creating branches, merging, and resolving conflicts
+- Working with remotes and pull requests
+- Stashing work and applying it later
+- Rebasing and interactive rebase
+- Cherry-picking commits
+- Using reset and reflog to recover work
+- Creating and inspecting tags
+- Finding the commit that introduced a bug with `git bisect`
 
-## Get Started!
+Practice the original Git-it challenges with a repository you choose. For history-changing exercises, use the app’s resettable practice repositories so you can safely try again. Optional knowledge checks can help you pause and think through a concept; hands-on command practice remains the focus.
 
-Open Git-it and click the button to begin the first challenge. Have your terminal and text editor open, too. Follow along with the instructions in each challenge and use the terminal or editor as instructed.
+## Getting started
 
-When you've completed the steps in a challenge click 'Verify'. Depending on the challenge you may need to also select the folder you did your work in for Git-it to verify.
+Install Git, then open MSIT Git Lab and begin with the first challenge. You’ll need a GitHub account for the collaboration challenges that use GitHub. For each lesson, follow the instructions and type the commands in your regular terminal. Select your working repository when the app asks you to verify a challenge.
 
-**Questions?** [Open an issue](http://github.com/jlord/git-it-electron/issues/new) on this repository.
+Git 2.39 or newer is recommended. The app uses your installed system Git and does not bundle Git.
 
-**Want to contribute or build locally?** See the [contributing documentation](CONTRIBUTING.md)
+## Run from source
 
----
+You’ll need Node.js 22, npm, and Git installed.
 
-### Tips For Getting Started
+```sh
+npm ci
+npm start
+```
 
-**Code snippets** often times look like `$ some code-stuff --here`. The dollar sign identifies the line as one a user would enter into the command line, but you don't actually include it when you type it into terminal. In this case, you'd actually just type `some code-stuff --here`.
+## Build locally
 
-**Variables** are indicated by `<VARIABLENAME>` in code snippets. When you actually use the line of code, replace `<VARIABLENAME>`, with your variable. For instance to make a new folder in terminal the format is, `mkdir <FOLDERNAME>`, so if you wanted to make a folder named 'octocat', you'd type: `mkdir octocat`.
+```sh
+npm test
+npm run build-all
+npm run make
+```
 
-**Command line, terminal and bash** all basically mean the same thing: the MS-DOS, Doogie Howser looking screen full of words and numbers. It's awesomely powerful and allows you to control your computer with text commands.
+Electron Forge creates a macOS universal app and ZIP on macOS, and a Windows x64 setup installer on Windows. macOS DMG creation uses the built-in `hdiutil` tool. See [the release guide](docs/release-process.md) for branch and release steps.
 
-You can do a lot of things from your terminal like delete, rename, copy or create files and folders; run scripts and send things back and forth between servers (like the ones storing things on GitHub.com) and your computer (also a server!).
+## Roadmap
+
+We’re building this as a practical learning resource for courses and for your own projects:
+
+- **More intermediate practice:** deepen workflows with remotes, pull requests, rebasing, and recovering from mistakes.
+- **More advanced scenarios:** add realistic team workflows, complex conflict practice, and multi-step debugging exercises.
+- **More ways to learn:** add optional knowledge checks with useful explanations, and clear visual explanations of how commits and branches move.
+- **Accessibility:** improve keyboard support, screen-reader guidance, contrast, reduced-motion support, and lesson readability.
+- **Classroom use:** explore instructor-friendly setup and progress options while keeping learner repositories private and local by default.
+- **Language quality:** keep English and informal German lessons aligned, with fluent review of German copy.
+
+Suggestions and student feedback are welcome through [GitHub Issues](https://github.com/lazar-savko/git-it-electron/issues).
+
+## Credits
+
+MSIT Git Lab is based on [Git-it by Jessica Lord](https://github.com/jlord/git-it-electron). The original Git-it challenges and attribution are retained. See [LICENSE](LICENSE) for the BSD-2-Clause license. MSIT branding belongs to Master School Institute of Technology.

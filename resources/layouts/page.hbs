@@ -1,21 +1,20 @@
 <!doctype html>
-<html>
+<html lang="{{ lang }}">
   <head>
     <meta charset="utf-8">
-    <title>Git-it</title>
-    <link rel="icon" type="image/png" href="../../../assets/new-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <title>MSIT Git Lab · {{ pageTitle }}</title>
+    <link rel="icon" type="image/png" href="../../../assets/msit-mark.png">
     <link rel="stylesheet" href="../../../assets/css/new-style.css">
     <link rel="stylesheet" href="../../../assets/css/new-challenge.css">
     <link rel="stylesheet" href="../../../assets/css/buttons.css">
-    <script>require('../../../lib/handle-external-links.js')</script>
+    <link rel="stylesheet" href="../../../assets/css/msit.css">
   </head>
-
-  <body>
+  <body class="legacy-page">
     {{{ header }}}
-
-    <div class="page-wrapper">
-      {{{ body }}}
-    </div>
-
+    <main class="page-wrapper legacy-content">{{{ body }}}</main>
+    {{{ footer }}}
+    <script defer src="../../../lib/common-renderer.js"></script>
   </body>
 </html>

@@ -1,35 +1,34 @@
-# Documentation
+# MSIT Git Lab architecture
 
-How does this thing work? Below are general descriptions of directories and content. Inside of each file, comments describe what that file's job is.
+## App structure
 
-## Directories & Files
-- **assets** Project assets like css, fonts and images.
-- **challenge-content** & **challenge-content-*** Main content of the challenges to be used in generating the final full HTML for each challenge page (English and other languages).
-- **challenges** & **challenges-*** Full HTML for each challenge (English and other languages)
-- **layouts** Handlebars templates for the challenges and basic pages.
-- **lib** All the JavaScript files for the app.
- - **verify** The JavaScript files for each challenge that verify if the challenge is completed or not.
-- **menus** The app's menu layout.
-- **pages** Full HTML of non-challenge pages.
-- **pages-content** Main content of non-challenge pages to be used with a template to generate full HTML.
-- **partials** HTML bits that are shared between either challenges or non-challenges pages, to be used in order to generate full HTML for pages.
-- **tests** App's test files.
-- **empty-data.json** The starter file that is duplicated and stored on the user's computer with their challenge completed statuses as they go through the lessons.
-- **index.html** & **index-*.html** The first page to load for the app (English and Traditional Chinese).
-- **main.js** App's main process file which spins up the renderer view for the pages.
-- **package.json** App's details and dependencies.
+- `main.js` owns the Electron main process, windows, dialogs, menus and IPC handlers.
+- `preload.js` exposes a narrow `window.msitGitLab` API to the renderer.
+- `lib/git-service.js` runs system Git through argument arrays with bounded output and timeouts.
+- `lib/progress-store.js` migrates the original challenge progress and keeps new lab progress in the Electron user-data directory.
+- `lib/labs.js` creates, resets and verifies generated repositories in `Documents/MSIT Git Lab`.
+- `lib/legacy-verification.js` checks the original challenge work in a learner-selected repository.
+- `lib/curriculum.js` defines bilingual lab instructions and optional knowledge checks.
+- `lib/app-renderer.js`, `lib/legacy-renderer.js` and `lib/common-renderer.js` are browser-only scripts. They do not import Node APIs.
+- `resources/contents/en-US` and `resources/contents/de-DE` hold the two supported languages. The build scripts render them into ignored `built/` pages.
+- `forge.config.js` configures Electron Forge, the macOS DMG/ZIP makers and the Windows Squirrel installer.
 
-### Relationships
-Files and directories grouped by their relationship in the app. Electron apps have a main process, which controls the lifecycle of the app, and the browser process, which is each HTML page that is spun up by the main process.
+## Renderer security
 
-**Main Process: Application Code**
-`main.js` controls the life of the app (start, quit) and the browser windows that make up the main app experience (what HTML files to show and what size). It is the app's **main process**. The `lib` and `lib/verify` directories contain all the code that the browser views, the app's **browser process**, use. Some of these communicate with the main process by sending and receiving messages.
+The window disables Node integration and enables context isolation and sandboxing. Content Security Policy blocks inline scripts and unapproved connections. The preload bridge validates each main-frame request. Git checks use `execFile` with an argument array, bounded output and a timeout; renderer text is inserted with `textContent`.
 
-**Browser Process: Pages & Assets**
-The pages that the app displays are HTML, just like a website. The `assets` directory contains the CSS, images and fonts used in each view. Each page starts with it's main content (`pages`, `challenge-content-zhtw`, `challenge-content`) and drops that into a template (`layouts`) along with the shared HTML elements (`partials`) like headers and footers.
+Only HTTPS links can be opened outside the app. Reset and history-recovery actions operate on the dedicated lab folder, not the repository selected for the original challenges.
 
-**Browser Process: Scripts**
-The `lib` directory contains scripts that each page uses. Inside of `lib/verify` are scripts for each challenge that tell it how to verify that challenge. The scripts `helpers.js` and `user-data.js` are shared between scripts, instructions below on [how these are used]().
+## Student data
 
-**Templating**
-There are scripts, templates and partials involved with generating the HTML pages. The main content for the challenges and non-challenge pages are within `challenge-content`, `challenge-content-zhtw` and `pages-content`. The directory `layouts` contains the templates, `partials` the partials that are combined with the main content files according to the template. The scripts `lib/build-page.js` and `lib/build-challenges.js` put it all in motion to generate the final HTML output which is placed in `pages`, `challenges` and `challenges-zhtw`. You can run these scripts from the command line, [instructions are below]().
+The original flat challenge status file and `saved-dir.json` are migrated into a versioned user-data file. Existing completion statuses and the saved repository path are retained. The clear-progress action leaves the saved repository selection in place.
+
+## Commands
+
+- `npm test` runs Node integration checks for lab creation, Git workflows, verification, reset, progress migration, checkpoints and reduced motion, then runs StandardJS.
+- `npm run build-all` regenerates both language builds.
+- `npm run package` packages the app without creating installers.
+- `npm run make` packages the app and invokes the platform makers.
+- `npm run set-dev-version` writes a unique `X.Y.Z-dev.RUN` version using `GITHUB_RUN_NUMBER`; a tagged development release passes its exact `X.Y.Z-dev.N` version as an argument.
+
+For branch protection, signing secrets, tag procedures and installer output, see [the release process](docs/release-process.md).

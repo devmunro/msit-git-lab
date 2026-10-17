@@ -1,11 +1,11 @@
-var locale = require('../lib/locale.js')
+const locale = require('../lib/locale.js')
 module.exports = function menu (app, mainWindow) {
-  var darwinMenu = [
+  const darwinMenu = [
     {
-      label: 'Git-it',
+      label: 'MSIT Git Lab',
       submenu: [
         {
-          label: 'About Git-it',
+          label: 'About MSIT Git Lab',
           selector: 'orderFrontStandardAboutPanel:'
         },
         {
@@ -19,7 +19,7 @@ module.exports = function menu (app, mainWindow) {
           type: 'separator'
         },
         {
-          label: 'Hide Git-it',
+          label: 'Hide MSIT Git Lab',
           accelerator: 'Command+H',
           selector: 'hide:'
         },
@@ -96,8 +96,8 @@ module.exports = function menu (app, mainWindow) {
           label: 'Home',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              var path = require('path').join(locale.getLocaleBuiltPath(locale.getCurrentLocale(focusedWindow)), 'pages', 'index.html')
-              focusedWindow.loadURL('file://' + path)
+              const path = require('path').join(locale.getLocaleBuiltPath(locale.getCurrentLocale(focusedWindow)), 'pages', 'index.html')
+              focusedWindow.loadFile(path)
             }
           }
         },
@@ -105,8 +105,8 @@ module.exports = function menu (app, mainWindow) {
           label: 'Dictionary',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              var path = require('path').join(locale.getLocaleBuiltPath(locale.getCurrentLocale(focusedWindow)), 'pages', 'dictionary.html')
-              focusedWindow.loadURL('file://' + path)
+              const path = require('path').join(locale.getLocaleBuiltPath(locale.getCurrentLocale(focusedWindow)), 'pages', 'resources.html')
+              focusedWindow.loadFile(path, { hash: 'git-dictionary' })
             }
           }
         },
@@ -114,8 +114,8 @@ module.exports = function menu (app, mainWindow) {
           label: 'Resources',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              var path = require('path').join(locale.getLocaleBuiltPath(locale.getCurrentLocale(focusedWindow)), 'pages', 'resources.html')
-              focusedWindow.loadURL('file://' + path)
+              const path = require('path').join(locale.getLocaleBuiltPath(locale.getCurrentLocale(focusedWindow)), 'pages', 'resources.html')
+              focusedWindow.loadFile(path)
             }
           }
         }
@@ -127,20 +127,14 @@ module.exports = function menu (app, mainWindow) {
         {
           label: 'Repository',
           click: function () {
-            require('electron').shell.openExternal('http://github.com/jlord/git-it-electron')
-          }
-        },
-        {
-          label: 'Open Issue',
-          click: function () {
-            require('electron').shell.openExternal('https://github.com/jlord/git-it-electron/issues/new')
+            require('electron').shell.openExternal('https://github.com/jlord/git-it-electron')
           }
         },
         {
           label: 'About App',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              var path = require('path').join(locale.getLocaleBuiltPath(locale.getCurrentLocale(focusedWindow)), 'pages', 'about.html')
+              const path = require('path').join(locale.getLocaleBuiltPath(locale.getCurrentLocale(focusedWindow)), 'pages', 'about.html')
               focusedWindow.loadURL('file://' + path)
             }
           }

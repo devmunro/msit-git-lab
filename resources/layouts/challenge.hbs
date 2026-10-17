@@ -1,34 +1,29 @@
 <!doctype html>
-<html>
+<html lang="{{ lang }}">
   <head>
     <meta charset="utf-8">
-    <title>Git-it</title>
-    <link rel="icon" type="image/png" href="../../../assets/new-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <title>MSIT Git Lab · {{ challengetitle }}</title>
+    <link rel="icon" type="image/png" href="../../../assets/msit-mark.png">
     <link rel="stylesheet" href="../../../assets/css/2-double-bounce.css">
     <link rel="stylesheet" href="../../../assets/css/new-style.css">
     <link rel="stylesheet" href="../../../assets/css/new-challenge.css">
     <link rel="stylesheet" href="../../../assets/css/buttons.css">
+    <link rel="stylesheet" href="../../../assets/css/msit.css">
   </head>
-  <body>
+  <body class="legacy-challenge" data-challenge="{{ shortname }}">
     {{{ header }}}
-
-    <div class="wrapper" id="challenge-body">
+    <main class="wrapper" id="challenge-body">
       {{{ sidebar }}}
-      <div class="content">
+      <section class="content">
         {{{ body }}}
         {{{ footer }}}
-      </div>
-    </div>
-
-    <script>
-      var challengeStatus = require('../../../lib/challenge-completed.js')
-      // TODO Get this from the DOM and don't do template in JS
-      var currentChallenge = '{{{ shortname }}}'
-      challengeStatus.completed(currentChallenge)
-    </script>
-
-    <script>require('../../../lib/handle-external-links.js')</script>
-    <script>require('../../../lib/languages.js')</script>
-    <script>require('../../../lib/challenge.js')</script>
+      </section>
+    </main>
+    <script defer src="../../../lib/curriculum.js"></script>
+    <script defer src="../../../lib/learning-path.js"></script>
+    <script defer src="../../../lib/common-renderer.js"></script>
+    <script defer src="../../../lib/legacy-renderer.js"></script>
   </body>
 </html>

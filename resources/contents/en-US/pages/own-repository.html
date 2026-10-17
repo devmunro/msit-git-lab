@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <meta name="theme-color" content="#193325">
+    <title>MSIT Git Lab · Your repository</title>
+    <link rel="icon" type="image/png" href="../../../assets/msit-mark.png">
+    <link rel="stylesheet" href="../../../assets/css/msit.css">
+    <script defer src="../../../lib/learning-path.js"></script>
+    <script defer src="../../../lib/curriculum.js"></script>
+    <script defer src="../../../lib/common-renderer.js"></script>
+    <script defer src="../../../lib/own-repository-renderer.js"></script>
+  </head>
+  <body class="app-home flow-home">
+    <header class="topbar msit-navbar">
+      <a class="brand" href="index.html" aria-label="MSIT Git Lab home"><img src="../../../assets/msit-logo-light.svg" alt="Master School Institute of Technology"><span class="brand-product">Git Lab</span></a>
+      <nav class="top-nav" aria-label="Main navigation"><a href="resources.html#resources">Resources</a><a href="resources.html#git-dictionary">Dictionary</a></nav>
+      <label class="language-control" for="lang-select"><span class="visually-hidden">Language</span><select id="lang-select" aria-label="Choose language">{{ localemenu }}</select></label>
+    </header>
+    <main class="page-shell flow-shell">
+      <section class="flow-step-panel own-repository-step" aria-labelledby="flow-step-label">
+        <nav class="learning-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Learning path</a></li><li><span>Original challenges</span></li><li aria-current="page">Your repository</li></ol></nav>
+        <div class="flow-step-top"><strong id="flow-step-label">Step 12 of 12</strong><span id="step-complete-count">11 of 12 steps completed</span></div>
+        <div class="flow-progress-overview"><div><strong id="overall-progress">11 / 12</strong><span>steps completed</span></div><div class="progress-dots" role="progressbar" aria-label="Learning path progress" aria-valuemin="0" aria-valuemax="12" aria-valuenow="11"><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-complete" aria-hidden="true"></span><span class="progress-dot is-next" aria-hidden="true"></span></div></div>
+        <p class="eyebrow">YOUR PROJECT</p>
+        <h1>Take your Git skills into your own repository.</h1>
+        <p class="flow-intro">Put what you learned into practice in a project of your choice. You can create a branch, make a commit and merge it, just like in the challenges.</p>
+        <div class="own-repository-panel flow-repository-panel">
+          <div><strong>Choose your project folder</strong><p id="selected-repository" class="selected-path">No repository selected yet.</p></div>
+          <button class="button button-outline" id="choose-repository" type="button">Choose a repository</button>
+        </div>
+        <p id="repository-note" class="flow-note" aria-live="polite">Git Lab checks original challenge tasks in the repository you select.</p>
+        <a class="flow-back-link" href="index.html">← Learning path</a>
+      </section>
+      <footer class="site-footer"><span>Based on Git-it by Jessica Lord</span><a href="https://joinmsit.de/en/" data-external>MSIT</a></footer>
+    </main>
+  </body>
+</html>

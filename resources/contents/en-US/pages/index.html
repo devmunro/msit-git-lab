@@ -1,165 +1,46 @@
 <!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <title>Git-it</title>
-        <link rel="icon" type="image/png" href="../../../assets/new-icon.png">
-        <link rel="stylesheet" href="../../../assets/css/new-style.css">
-        <link rel="stylesheet" href="../../../assets/css/new-challenge.css">
-        <link rel="stylesheet" href="../../../assets/css/buttons.css">
-        <link rel="stylesheet" href="../../../assets/octicons.css">
-        <script src="../../../lib/challenges-completed.js"></script>
-        <script src="../../../lib/handle-external-links.js"></script>
-    </head>
-    <body class="index-page">
-        <header class="site-header">
-            <div class="lang-select">
-                <select id="lang-select" class="lang-select btn-outline">
-                    {{ localemenu }}
-                </select>
-            </div>
-            <a class="filledblock" href="./index.html">Git-it</a>
-            <div class="header-icons-overlay">
-                <img src="../../../assets/git-it.png" alt="Git-it Old" class="app-icon old-icon" />
-                <img src="../../../assets/new-icon.png" alt="Git-it New" class="app-icon new-icon" />
-            </div>
-        </header>
-
-        <div class="page-wrapper">
-            <div id="progress-cirlces-section" class="progress-container">
-                <div class="progress-header">
-                    <h2>Your Learning Progress</h2>
-                    <button class="clear-progress-btn js-clear-all-challenges" title="Clear all progress">
-                        <span class="octicon octicon-trashcan"></span>
-                        Clear All
-                    </button>
-                </div>
-                
-                <div class="progress-grid">
-                    <div class="progress-card basics-card">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <div class="card-icon basics-icon">📚</div>
-                                <h3>Git Basics</h3>
-                            </div>
-                            <div class="progress-badge">
-                                <span class="section-label">0/6</span>
-                            </div>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-circles">
-                                <a href="../challenges/get_git.html"><div class="progress-circle" title="Get Git"></div></a>
-                                <a href="../challenges/repository.html"><div class="progress-circle" title="Repository"></div></a>
-                                <a href="../challenges/commit_to_it.html"><div class="progress-circle" title="Commit to it"></div></a>
-                                <a href="../challenges/githubbin.html"><div class="progress-circle" title="GitHubbin"></div></a>
-                                <a href="../challenges/remote_control.html"><div class="progress-circle" title="Remote Control"></div></a>
-                                <a href="../challenges/forks_and_clones.html"><div class="progress-circle" title="Forks and Clones"></div></a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-card advanced-card">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <div class="card-icon advanced-icon">🚀</div>
-                                <h3>GitHub & Collaboration</h3>
-                            </div>
-                            <div class="progress-badge">
-                                <span class="section-label">0/5</span>
-                            </div>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-circles">
-                                <a href="../challenges/branches_arent_just_for_birds.html"><div class="progress-circle" title="Branches"></div></a>
-                                <a href="../challenges/its_a_small_world.html"><div class="progress-circle" title="Small World"></div></a>
-                                <a href="../challenges/pull_never_out_of_date.html"><div class="progress-circle" title="Pull Updates"></div></a>
-                                <a href="../challenges/requesting_you_pull_please.html"><div class="progress-circle" title="Pull Requests"></div></a>
-                                <a href="../challenges/merge_tada.html"><div class="progress-circle" title="Merge, tada!"></div></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="start-buttons-section">
-                <a href="../challenges/get_git.html" class="start-btn basics-btn">Start Basics →</a>
-                <a href="../challenges/branches_arent_just_for_birds.html" class="start-btn advanced-btn">Start Advanced →</a>
-            </div>
-
-            <div id="show-first-run">
-                <h1>Welcome!</h1>
-                <p>Git-it teaches the basics of using Git and GitHub. These basics aren't merely beginner Git and GitHub
-                    skills, they are the commands and steps you'll use over and over as in your awesome social coding +
-                    version controlled future.</p>
-
-                <div class="chal-background light-blue solid-box">
-                    <h3>But Wait—There's More</h3>
-                    <p>You can also complete Git-it in <strong>German</strong>, <strong>Traditional Chinese</strong>, <strong>Japanese</strong>, <strong>Korean</strong>, <strong>Portuguese (Brazil)</strong> and <strong>Ukrainian</strong>, 
-                        just select the language you want from the menu in the upper left.</p>
-
-                    <p>The 'Window' option in the application menu will take you to the <strong><a
-                            href="dictionary.html">Dictionary</a></strong>, <strong><a
-                            href="resources.html">Resources</a></strong> and <strong><a
-                            href="about.html">About</a></strong> page.</p>
-                </div>
-
-                <a href="../challenges/get_git.html" id="get-started">
-                    <button class="btn-primary">Start challenge one!</button>
-                </a>
-            </div>
-
-            <div id="show-wip-run">
-                <!-- <div class="progress-circles border-group-container full-width">
-                  <span class="border-group-left">Challenges completed:</span>
-                  <span class="border-group-middle">
-                    <a href="challenges/get_git.html"><div class="progress-circle" title="Get Git"></div></a>
-                    <a href="challenges/repository.html"><div class="progress-circle" title="Repository"></div></a>
-                    <a href="challenges/commit_to_it.html"><div class="progress-circle" title="Commit to it"></div></a>
-                    <a href="challenges/githubbin.html"><div class="progress-circle" title="GitHubbin"></div></a>
-                    <a href="challenges/remote_control.html"><div class="progress-circle" title="Remote Control"></div></a>
-                    <a href="challenges/forks_and_clones.html"><div class="progress-circle" title="Forks and Clones"></div></a>
-                    <a href="challenges/branches_arent_just_for_birds.html"><div class="progress-circle" title="Branches"></div></a>
-                    <a href="challenges/its_a_small_world.html"><div class="progress-circle" title="It's a small world"></div></a>
-                    <a href="challenges/pull_never_out_of_date.html"><div class="progress-circle" title="Pull, never out of date"></div></a>
-                    <a href="challenges/requesting_you_pull_please.html"><div class="progress-circle" title="Requesting you pull please"></div></a>
-                    <a href="challenges/merge_tada.html"><div class="progress-circle" title="Merge, tada!"></div></a>
-                  </span>
-                  <span class="border-group-right btn js-clear-all-challenges" title="Clear status"><span class="octicon octicon-trashcan"></span></span>
-                </div> -->
-                <h1>On your way!</h2>
-                    <p>You're making progress, keep going and pick up where you left off.</p>
-                    <a id="left-off-from">
-                        <button class="btn-primary">Pick up where you left off!</button>
-                    </a>
-            </div>
-
-            <div id="show-finished-run">
-                <!-- <div class="progress-circles border-group-container full-width">
-                  <span class="border-group-left">Challenges completed:</span>
-                  <span class="border-group-middle">
-                    <a href="challenges/get_git.html"><div class="progress-circle-completed" title="Get Git"></div></a>
-                    <a href="challenges/repository.html"><div class="progress-circle-completed" title="Repository"></div></a>
-                    <a href="challenges/commit_to_it.html"><div class="progress-circle-completed" title="Commit to it"></div></a>
-                    <a href="challenges/githubbin.html"><div class="progress-circle-completed" title="GitHubbin"></div></a>
-                    <a href="challenges/remote_control.html"><div class="progress-circle-completed" title="Remote Control"></div></a>
-                    <a href="challenges/forks_and_clones.html"><div class="progress-circle-completed" title="Forks and Clones"></div></a>
-                    <a href="challenges/branches_arent_just_for_birds.html"><div class="progress-circle-completed" title="Branches"></div></a>
-                    <a href="challenges/its_a_small_world.html"><div class="progress-circle-completed" title="It's a small world"></div></a>
-                    <a href="challenges/pull_never_out_of_date.html"><div class="progress-circle-completed" title="Pull, never out of date"></div></a>
-                    <a href="challenges/requesting_you_pull_please.html"><div class="progress-circle-completed" title="Requesting you pull please"></div></a>
-                    <a href="challenges/merge_tada.html"><div class="progress-circle-completed" title="Merge, tada!"></div></a>
-                  </span>
-                  <span class="border-group-right btn js-clear-all-challenges" title="Clear status"><span class="octicon octicon-trashcan"></span></span>
-                </div> -->
-                <h1>Congratulations!</h2>
-                    <p>You finished the challenges and are primed for social coding—so what's next?</p>
-                    <a href="resources.html">
-                        <button class="btn-primary">Ideas for beginner projects</button>
-                    </a>
-                    <button class="btn-secondary js-clear-all-challenges">Clear and start over</button>
-            </div>
-
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <meta name="theme-color" content="#193325">
+    <title>MSIT Git Lab</title>
+    <link rel="icon" type="image/png" href="../../../assets/msit-mark.png">
+    <link rel="stylesheet" href="../../../assets/css/msit.css">
+    <script defer src="../../../lib/curriculum.js"></script>
+    <script defer src="../../../lib/learning-path.js"></script>
+    <script defer src="../../../lib/common-renderer.js"></script>
+    <script defer src="../../../lib/home-renderer.js"></script>
+  </head>
+  <body class="app-home flow-home">
+    <header class="topbar msit-navbar">
+      <a class="brand" href="./index.html" aria-label="MSIT Git Lab home">
+        <img src="../../../assets/msit-logo-light.svg" alt="Master School Institute of Technology">
+        <span class="brand-product">Git Lab</span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation"><a href="resources.html#resources">Resources</a><a href="resources.html#git-dictionary">Dictionary</a></nav>
+      <label class="language-control" for="lang-select"><span class="visually-hidden">Language</span>
+        <select id="lang-select" aria-label="Choose language">{{ localemenu }}</select>
+      </label>
+    </header>
+    <main class="page-shell flow-shell">
+      <section class="flow-panel" aria-labelledby="flow-title">
+        <p class="eyebrow">YOUR LEARNING PATH</p>
+        <h1 id="flow-title">Start with the challenges.</h1>
+        <p class="flow-intro">Work through the original Git-it challenges in order, from the basics to branches, pull requests and merges. Then try what you’ve learned in your own repository.</p>
+        <div class="flow-progress-overview" aria-live="polite">
+          <div><strong id="flow-progress-label">0 / 12</strong><span>steps completed</span></div>
+          <div class="progress-dots" role="progressbar" aria-label="Learning path progress" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"></div>
         </div>
-        <script src="../../../lib/languages.js"></script>
-    </body>
+        <p id="resume-copy" class="resume-copy">Your first step is challenge 1: Get Git.</p>
+        <a id="continue-learning" class="button button-primary" href="../challenges/get_git.html">Start challenge 1 <span aria-hidden="true">→</span></a>
+        <section class="home-learning-path" aria-labelledby="path-title">
+          <div class="path-heading"><h2 id="path-title">Your path</h2><span id="path-unlock-copy">Complete each challenge to unlock the next one.</span></div>
+          <nav id="challenge-path" class="challenge-path" aria-label="Challenge learning path" aria-live="polite"></nav>
+        </section>
+      </section>
+      <footer class="site-footer"><span>Based on Git-it by Jessica Lord</span><a href="https://joinmsit.de/en/" data-external>MSIT</a></footer>
+    </main>
+  </body>
 </html>

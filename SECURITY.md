@@ -1,5 +1,5 @@
-# Security Policy
+# Security policy
 
-## Reporting a Vulnerability
+Please report vulnerabilities privately to the maintainers of the MSIT Git Lab repository where you obtained the app. Do not post exploit details in a public issue.
 
-Please email jlord@github.com with reports. I am not a very active maintainer these days but I will try to do what I can <3 
+Before public releases, repository administrators should enable GitHub private vulnerability reporting or publish a dedicated security contact address. The original Git-it project is separately maintained; reports for this MSIT fork should go to its current maintainers.
