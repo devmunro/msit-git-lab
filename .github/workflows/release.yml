@@ -5,6 +5,12 @@ on:
     tags:
       - 'v*-dev.*'
       - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing release tag to build and publish
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -24,17 +30,21 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ inputs.release_tag || github.ref }}
       - name: Confirm the tag is on the correct branch
         shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
         run: |
           git fetch origin main develop
-          if [[ "$GITHUB_REF_NAME" == *-dev.* ]]; then
+          if [[ "$RELEASE_TAG" == *-dev.* ]]; then
             source_branch=origin/develop
           else
             source_branch=origin/main
           fi
-          if ! git branch -r --contains "$GITHUB_SHA" | sed 's/^[* ]*//' | grep -Fxq "$source_branch"; then
-            echo "Tag $GITHUB_REF_NAME must point to $source_branch" >&2
+          tag_sha=$(git rev-list -n 1 "$RELEASE_TAG")
+          if ! git branch -r --contains "$tag_sha" | sed 's/^[* ]*//' | grep -Fxq "$source_branch"; then
+            echo "Tag $RELEASE_TAG must point to $source_branch" >&2
             exit 1
           fi
       - uses: actions/setup-node@v4
@@ -43,13 +53,17 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Validate stable version
-        if: ${{ !contains(github.ref_name, '-dev.') }}
-        run: node scripts/validate-release-version.js "${GITHUB_REF_NAME#v}"
+        if: ${{ !contains(inputs.release_tag || github.ref_name, '-dev.') }}
+        run: node scripts/validate-release-version.js "${RELEASE_TAG#v}"
         shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
       - name: Set development version from tag
-        if: contains(github.ref_name, '-dev.')
-        run: npm run set-dev-version -- "${GITHUB_REF_NAME#v}"
+        if: contains(inputs.release_tag || github.ref_name, '-dev.')
+        run: npm run set-dev-version -- "${RELEASE_TAG#v}"
         shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
       - run: npm test
       - run: npm audit --audit-level=high
       - run: npm run build-all
@@ -152,7 +166,8 @@ jobs:
           if [[ -n "$zip" ]]; then cp "$zip" release-assets/MSIT-Git-Lab-macOS-universal.zip; fi
       - uses: softprops/action-gh-release@v2
         with:
-          prerelease: ${{ contains(github.ref_name, '-dev.') }}
+          tag_name: ${{ inputs.release_tag || github.ref_name }}
+          prerelease: ${{ contains(inputs.release_tag || github.ref_name, '-dev.') }}
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
